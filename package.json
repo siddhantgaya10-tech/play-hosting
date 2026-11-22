@@ -1,0 +1,10 @@
+{
+  "name": "blockmate",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted Minecraft companion with a real web control panel",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": { "start": "node --env-file-if-exists=.env server.js", "test": "node --test" },
+  "dependencies": { "mineflayer": "^4.0.0", "mineflayer-pathfinder": "^2.4.5", "vec3": "^0.1.10" }
+}
