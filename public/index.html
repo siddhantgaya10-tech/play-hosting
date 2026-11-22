@@ -23,11 +23,6 @@
     <button id="logout" class="ghost">Sign out</button>
   </header>
 
-  <section id="auth-box" class="card" hidden>
-    <h2>Microsoft sign-in</h2>
-    <p>Open <a id="auth-url" href="https://www.microsoft.com/link" target="_blank" rel="noopener noreferrer">microsoft.com/link</a> and enter code <strong id="auth-code"></strong></p>
-  </section>
-
   <div class="grid">
     <section class="card">
       <h2>Status</h2>
@@ -52,10 +47,7 @@
         <label>Server host <input name="host" required></label>
         <label>Port <input name="port" type="number" min="1" max="65535"></label>
         <label>Version (optional) <input name="version" placeholder="1.21.11"></label>
-        <label>Bot account <input name="username"></label>
-        <label>Auth
-          <select name="auth"><option value="microsoft">microsoft</option><option value="offline">offline</option></select>
-        </label>
+        <label>Bot name (3-16 letters, digits, _) <input name="username" minlength="3" maxlength="16"></label>
         <label>Owner (Minecraft name) <input name="owner" required></label>
         <label>Owner UUID (optional) <input name="ownerUuid"></label>
         <label class="check"><input name="reconnect" type="checkbox"> Reconnect automatically</label>
