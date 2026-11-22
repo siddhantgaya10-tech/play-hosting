@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blockmate</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main id="login" class="card narrow">
+  <h1>Blockmate</h1>
+  <form id="login-form">
+    <label>Admin password <input id="password" type="password" autocomplete="current-password" required></label>
+    <button type="submit">Sign in</button>
+    <p id="login-error" class="error"></p>
+  </form>
+</main>
+
+<main id="app" hidden>
+  <header>
+    <h1>Blockmate</h1>
+    <span id="phase" class="badge">stopped</span>
+    <button id="logout" class="ghost">Sign out</button>
+  </header>
+
+  <section id="auth-box" class="card" hidden>
+    <h2>Microsoft sign-in</h2>
+    <p>Open <a id="auth-url" href="https://www.microsoft.com/link" target="_blank" rel="noopener noreferrer">microsoft.com/link</a> and enter code <strong id="auth-code"></strong></p>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Status</h2>
+      <dl>
+        <dt>Task</dt><dd id="task">Idle</dd>
+        <dt>Version</dt><dd id="version">-</dd>
+        <dt>Health / Food</dt><dd id="vitals">-</dd>
+        <dt>Position</dt><dd id="position">-</dd>
+        <dt>Players</dt><dd id="players">-</dd>
+      </dl>
+      <div class="row">
+        <button id="start">Connect</button>
+        <button id="stop" class="ghost">Disconnect</button>
+        <button id="stop-action" class="ghost">Stop action</button>
+      </div>
+      <p id="action-msg" class="error"></p>
+    </section>
+
+    <section class="card">
+      <h2>Settings</h2>
+      <form id="config-form">
+        <label>Server host <input name="host" required></label>
+        <label>Port <input name="port" type="number" min="1" max="65535"></label>
+        <label>Version (optional) <input name="version" placeholder="1.21.11"></label>
+        <label>Bot account <input name="username"></label>
+        <label>Auth
+          <select name="auth"><option value="microsoft">microsoft</option><option value="offline">offline</option></select>
+        </label>
+        <label>Owner (Minecraft name) <input name="owner" required></label>
+        <label>Owner UUID (optional) <input name="ownerUuid"></label>
+        <label class="check"><input name="reconnect" type="checkbox"> Reconnect automatically</label>
+        <label class="check"><input name="autostart" type="checkbox"> Connect when service starts</label>
+        <button type="submit">Save settings</button>
+        <p id="config-msg" class="error"></p>
+      </form>
+    </section>
+
+    <section class="card wide">
+      <h2>Command</h2>
+      <form id="command-form" class="row">
+        <input id="command" maxlength="240" placeholder="help, follow, goto 100 64 -20, say Hello" required>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Inventory</h2>
+      <ul id="inventory"><li>Empty</li></ul>
+    </section>
+
+    <section class="card">
+      <h2>Activity log</h2>
+      <pre id="logs"></pre>
+    </section>
+  </div>
+</main>
+<script src="/ui.js" type="module"></script>
+</body>
+</html>
