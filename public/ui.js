@@ -29,14 +29,12 @@ function fillConfig(c) {
 
 function render(s) {
   $('phase').textContent = s.phase || 'stopped';
-  $('phase').className = 'badge' + (s.phase === 'online' ? ' online' : '');
+  $('phase').className = 'badge ' + (s.phase || 'stopped');
   $('task').textContent = s.task || 'Idle';
   $('version').textContent = s.version || '-';
   $('vitals').textContent = s.health == null ? '-' : `${s.health} / ${s.food}`;
   $('position').textContent = s.position ? `${s.position.x}, ${s.position.y}, ${s.position.z}` : '-';
   $('players').textContent = s.players?.length ? s.players.join(', ') : '-';
-  $('auth-box').hidden = !s.authCode;
-  if (s.authCode) { $('auth-code').textContent = s.authCode.code; $('auth-url').href = s.authCode.url; }
   const inv = $('inventory'); inv.replaceChildren();
   for (const i of s.inventory?.length ? s.inventory : [{ name: 'Empty', count: '' }]) {
     const li = document.createElement('li'); li.textContent = i.count ? `${i.name} ×${i.count}` : i.name; inv.append(li);

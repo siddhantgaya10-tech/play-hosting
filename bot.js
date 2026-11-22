@@ -39,12 +39,7 @@ export class Companion extends EventEmitter {
     try {
       b = mineflayer.createBot({ host: this.config.host, port: this.config.port,
         version: this.config.version || false, username: this.config.username,
-        auth: this.config.auth, profilesFolder: `${this.dataDir}/auth`,
-        onMsaCode: data => {
-          if (this.bot !== b || !this.desired) return;
-          this.authCode = { code: data.user_code, url: 'https://www.microsoft.com/link' };
-          this.phase = 'authentication'; this.log('info', 'Microsoft sign-in required. Use the code shown in the dashboard.');
-        } });
+        auth: 'offline' });
       this.bot = b; b.loadPlugin(pathfinder);
     } catch (e) {
       this.desired = false; this.phase = 'error'; this.log('error', e.message); return;
@@ -96,15 +91,22 @@ export class Companion extends EventEmitter {
   stopTask() {
     this.generation++; this.task = 'Idle';
     if (this.bot?.pathfinder) this.bot.pathfinder.setGoal(null);
-    this.bot?.clearControlStates();
-    if (this.bot?.targetDigBlock) this.bot.stopDigging();
+    this.bot?.clearControlStates?.();
+    if (this.bot?.targetDigBlock) this.bot.stopDigging?.();
   }
   stop() {
     this.desired = false; clearTimeout(this.timer); this.stopTask(); this.authCode = null;
     const b = this.bot; this.phase = b ? 'stopping' : 'stopped';
     if (b) {
-      b.quit('Stopped from dashboard');
-      setTimeout(() => { if (this.bot === b) b.end('Forced stop'); }, 5000).unref();
+      try { if (typeof b.quit === 'function') b.quit('Stopped from dashboard'); else b.end('Stopped from dashboard'); } catch {}
+      setTimeout(() => {
+        if (this.bot !== b) return;
+        try { b.end('Forced stop'); } catch {}
+        setTimeout(() => {
+          if (this.bot !== b) return;
+          this.bot = null; this.phase = 'stopped'; this.log('info', 'Stopped');
+        }, 1000).unref();
+      }, 4000).unref();
     }
     this.log('info', 'Stop requested');
   }
